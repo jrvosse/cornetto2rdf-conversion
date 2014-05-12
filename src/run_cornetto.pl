@@ -12,7 +12,7 @@
 	    load_lmf/0
 	  ]).
 
-user:file_search_path(data, 'cornetto/xml').
+user:file_search_path(data, 'xml').
 
 :- load_files(library(semweb/rdf_db), [silent(true)]).
 
