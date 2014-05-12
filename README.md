@@ -24,6 +24,10 @@ Once you have that, this should work:
 	?- load_lmf.
 
 6. If the previous step succeeded, you can from now on edit the scripts, dynamically recompile and rerun without restarting and reloading.
-   To run the scripts for a first time, simply
+   To run the scripts for a first time, simply run:
+
+	?- rewrite.
+	?- post_process.
+	?- save.
 
 
