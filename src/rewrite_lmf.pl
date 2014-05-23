@@ -15,7 +15,7 @@
 :- debug(rdf_rewrite).
 :- debug(wordnet).
 
-result_directory('cornetto/rdf').
+result_directory(rdf).
 
 rewrite_lmf :-rdf_rewrite(lmf).
 rewrite_lmf(Rule) :- rdf_rewrite(lmf, Rule).
