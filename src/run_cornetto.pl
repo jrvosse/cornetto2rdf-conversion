@@ -9,7 +9,8 @@
 	    clean_all/0,
 
 	    load/0,
-	    load_lmf/0
+	    load_lmf/0,
+	    load_lmf/1
 	  ]).
 
 user:file_search_path(data, 'xml').
@@ -85,7 +86,9 @@ load :-
 
 load_lmf :-
 	% LmfFile = 'lmf100k.xml',
-	LmfFile = 'cornetto-lmf.xml.gz',
+	load_lmf('cornetto-lmf.xml.gz').
+
+load_lmf(LmfFile) :-
 	absolute_file_name(data(LmfFile), File,
 			   [ access(read)
 			   ]),
