@@ -3,7 +3,7 @@
 I assume you have the XML version of Cornetto in a subdirectory 'xml' in a file called 'cornetto-lmf.xml.gz'.
 Once you have that, this should work:
 
-1. Configure ClioPatria in this directory:
+1. Configure ClioPatria in this directory (e.g. the root dir van this project):
 
 	shell> ../path/to/ClioPatria/configure --with-localhost
 
