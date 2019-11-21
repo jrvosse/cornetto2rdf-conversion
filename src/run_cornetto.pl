@@ -1,5 +1,5 @@
-:- module(cornetto_convert_data,
-	  [ run_cornetto/0,
+:- module(cornetto_odwn_convert_data,
+	  [ run_conversion/0,
 					% Partial steps
 	    clean/0,
 	    rewrite/0,
@@ -9,11 +9,14 @@
 	    clean_all/0,
 
 	    load/0,
-	    load_lmf/0,
 	    load_lmf/1
 	  ]).
 
 user:file_search_path(data, 'xml').
+lmf_input_file(cornetto21, 'cornetto-lmf.xml.gz').
+lmf_input_file(odwn13, 'odwn_orbn_gwg-LMF_1.3.xml.gz').
+% lmf_input_file(odwn13, 'odwn_test.xml.gz').
+
 
 :- load_files(library(semweb/rdf_db), [silent(true)]).
 
@@ -23,6 +26,10 @@ user:file_search_path(data, 'xml').
 :- rdf_register_ns(corn21s,            'http://purl.org/vocabularies/cornetto/21/schema/').
 :- rdf_register_ns(corn21i,            'http://purl.org/vocabularies/cornetto/21/instances/').
 :- rdf_register_ns(corn21r,            'http://purl.org/vocabularies/cornetto/21/edoal/').
+:- rdf_register_ns(odwn13,             'http://purl.org/vocabularies/odwn13/').
+:- rdf_register_ns(odwn13i,            'http://purl.org/vocabularies/odwn13/instances/').
+:- rdf_register_ns(odwn13s,            'http://purl.org/vocabularies/odwn13/schema/').
+:- rdf_register_ns(odwn13r,            'http://purl.org/vocabularies/odwn13/edoal/').
 
 :- rdf_register_ns(wn30,     'http://purl.org/vocabularies/princeton/wn30/').
 :- rdf_register_ns(wn20s,    'http://www.w3.org/2006/03/wn/wn20/schema/').
@@ -40,6 +47,7 @@ user:file_search_path(data, 'xml').
 		library(semweb/rdf_turtle_write)
 	      ], [silent(true)]).
 
+:- use_module(lmf_uris).
 :- use_module(rewrite_lmf).
 :- use_module(post_process_lmf).
 
@@ -81,12 +89,10 @@ load_ontologies :-
 :- debug(xmlrdf).
 
 load :-
-	load_lmf,
-	true.
+	target_lexicon(Lexicon),
+	lmf_input_file(Lexicon, InputFile),
+	load_lmf(InputFile).
 
-load_lmf :-
-	% LmfFile = 'lmf100k.xml',
-	load_lmf('cornetto-lmf.xml.gz').
 
 load_lmf(LmfFile) :-
 	absolute_file_name(data(LmfFile), File,
@@ -115,7 +121,8 @@ clean_input :-
 	rdf_unload_graph(sy).
 
 save :-
-	save_lmf.
+	target_lexicon(Lexicon),
+	save_rdf(Lexicon).
 
 post_process:-
 	post_process_lmf.
@@ -123,7 +130,7 @@ post_process:-
 rewrite :-
 	rewrite_lmf.
 
-run_cornetto :-
+run_conversion :-
 	load,
 	rewrite,
 	post_process,

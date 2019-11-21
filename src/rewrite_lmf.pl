@@ -4,7 +4,7 @@
 	    rewrite_lmf/2,
 	    list_rules_lmf/0,
 
-	    save_lmf/0,
+	    save_rdf/1,
 	    clean_lmf/0
 	  ]).
 :- use_module(library(semweb/rdf_db)).
@@ -77,7 +77,7 @@ clean_lmf:-
 	rdf_unload_graph(lexical_form),
 	true.
 
-save_lmf:-
+save_rdf(cornetto21):-
 	% save(sumo, 'cornetto-sumo-mapping.ttl'),
 	save(replacedBy, 'cornetto21-cornetto12-mapping.ttl'),
 	save(hub_new,    'cornetto21-hub-mapping.ttl'),
@@ -106,10 +106,26 @@ save_lmf:-
 	save(synset_types, 'cornetto21-synset-types.ttl'),
 	save(synset_labels,'cornetto21-synset-skos-labels.ttl'),
 	save(synset_defs,  'cornetto21-synset-skos-definitions.ttl'),
-	save(inscheme,	   'cornetto21-synset-skos-inscheme.ttl'),
+	save(inscheme,	   'cornetto21-synset-skos-inscheme.ttl').
 
+save_rdf(odwn13):-
+	save(domainspec, 'odwn13-wordnet-domainspec.ttl'),
+	save(domains,    'odwn13-wordnet-domains.ttl'),
 
-	true.
+	save(synset,     'odwn13-synsets.ttl'),
+	save(entry,      'odwn13-entries.ttl'),
+	save(form,       'odwn13-lexforms.ttl'),
+	save(sense,      'odwn13-senses.ttl'),
+
+	save(pragmatics,       'odwn13-sense-pragmatics.ttl'),
+	save(sense_examples,   'odwn13-sense-examples.ttl'),
+	save(synset_relations, 'odwn13-synset-relations.ttl'),
+
+	save(synset_types, 'odwn13-synset-types.ttl'),
+	save(synset_labels,'odwn13-synset-skos-labels.ttl'),
+	save(synset_defs,  'odwn13-synset-skos-definitions.ttl'),
+	save(inscheme,	   'odwn13-synset-skos-inscheme.ttl').
+
 
 save(Graph, File) :-
 	result_directory(Directory),
