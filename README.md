@@ -5,7 +5,7 @@ Once you have that, this should work:
 
 1. Configure ClioPatria in this directory (e.g. the root dir of this project):
 
-	shell> ../path/to/ClioPatria/configure --with-localhost
+	shell> ../path/to/ClioPatria/configure --with-localhost --with-rdfpath
 
 2. Start ClioPatria:
 
