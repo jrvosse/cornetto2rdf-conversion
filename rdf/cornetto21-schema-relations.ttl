@@ -1,0 +1,452 @@
+# Cornetto RDFS schema
+# Synset relations
+
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:    <http://www.w3.org/2002/07/owl#> .
+@prefix vra:    <http://www.vraweb.org/vracore/vracore3#> .
+@prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
+@prefix wn20s:  <http://www.w3.org/2006/03/wn/wn20/schema/> .
+@prefix dc:     <http://purl.org/dc/terms/> .
+@prefix lemon:  <http://www.lemon-model.net/lemon#> .
+@prefix dcr:    <http://isocat.org/ns/dcr.rdf#> .
+@prefix cornetto: <http://purl.org/vocabularies/cornetto/21/schema/> .
+
+cornetto:reltype a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5938> ;
+	rdfs:label "super property on all relations defined on Cornetto synsets "@en.
+
+# Internal relations:
+cornetto:internalRelation a rdf:Property ;
+	rdfs:subPropertyOf cornetto:reltype ;
+	rdfs:label "Relation between Cornetto synsets"@en.
+
+# hyponym and hypernym
+cornetto:hasHyperonym a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5824> ;	
+	rdfs:label "HAS_HYPERONYM"@en ;
+	rdfs:comment "A relation between two concepts where concept A is a type of concept B."@en ;
+	rdfs:subPropertyOf cornetto:internalRelation ;
+	rdfs:subPropertyOf wn20s:hyponymOf ;
+	rdfs:subPropertyOf skos:broader .
+
+cornetto:hasHyponym a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5823> ;	
+	rdfs:label "HAS_HYPONYM"@en ;
+	rdfs:subPropertyOf cornetto:internalRelation ;
+	rdfs:subPropertyOf wn20s:hypernymOf ;
+	rdfs:subPropertyOf skos:narrower ;
+	owl:inverseOf cornetto:hasHyperonym .
+
+# holonym and meronym
+cornetto:hasHolonym a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5836> ;	
+	rdfs:label "HAS_HOLONYM"@en ;
+	rdfs:comment "A relation between two concepts where concept A makes up a part of concept B. (cf. HAS_MERONYM)"@en ;
+	rdfs:subPropertyOf cornetto:internalRelation ;
+	rdfs:subPropertyOf wn20s:meronymOf ;
+	rdfs:subPropertyOf skos:broader .
+cornetto:hasMeronym a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5854> ;	
+	rdfs:label "HAS_MERONYM"@en ;
+	rdfs:comment "A relation between two concepts where concept B makes up a part of concept A. (cf. HAS_HOLONYM)"@en ;
+	rdfs:subPropertyOf cornetto:internalRelation ;
+	rdfs:subPropertyOf wn20s:holonymOf ;
+	owl:inverseOf cornetto:hasHolonym  ;
+	rdfs:subPropertyOf skos:narrower .
+
+cornetto:hasHoloPart a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5817> ;	
+        rdfs:label "HAS_HOLO_PART"@en ;
+        rdfs:comment "A relation between two concepts where concept A is a component of concept B. (cf. HAS_MERO_PART)"@en ;
+        rdfs:subPropertyOf skos:broader ;
+	rdfs:subPropertyOf cornetto:internalRelation ;
+	rdfs:subPropertyOf wn20s:partMeronymOf .
+cornetto:hasMeroPart a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5846> ;	
+        rdfs:label "HAS_MERO_PART"@en ;
+        rdfs:comment "A relation between two concepts where concept B is a component of concept A. (cf. HAS_HOLO_PART)"@en ;
+	rdfs:subPropertyOf cornetto:internalRelation ;
+        rdfs:subPropertyOf skos:narrower ;
+	rdfs:subPropertyOf wn20s:partHolonymOf ;
+	owl:inverseOf cornetto:hasHoloPart .
+
+cornetto:hasHoloMember a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5830> ;	
+	rdfs:subPropertyOf cornetto:internalRelation ;
+	rdfs:subPropertyOf wn20s:memberMeronymOf .
+cornetto:hasMeroMember a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5819> ;	
+	rdfs:subPropertyOf cornetto:internalRelation ;
+	rdfs:subPropertyOf wn20s:memberHolonymOf ;
+	owl:inverseOf cornetto:hasHoloMember .
+
+cornetto:hasHoloMadeOf a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5831> ;	
+	rdfs:subPropertyOf cornetto:internalRelation ;
+	rdfs:subPropertyOf wn20s:substanceMeronymOf .
+cornetto:hasMeroMadeOf a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5820> ;	
+	rdfs:subPropertyOf cornetto:internalRelation ;
+	rdfs:subPropertyOf wn20s:substanceHolonymOf;
+	owl:inverseOf cornetto:hasHoloMadeOf ;
+	rdfs:label "made of holonym of"@en.
+
+cornetto:hasMeroLocation a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5821> ;	
+	rdfs:subPropertyOf cornetto:internalRelation ;
+	rdfs:subPropertyOf skos:related;
+	rdfs:subPropertyOf wn20s:holonymOf ;
+	rdfs:label "has meronym (location)"@en.
+
+cornetto:hasMeroPortion a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5826> ;	
+	rdfs:subPropertyOf cornetto:internalRelation ;
+	rdfs:subPropertyOf skos:related;
+	rdfs:subPropertyOf wn20s:holonymOf ;
+	rdfs:label "has meronym (portion)"@en.
+
+# Not mapped to w3c wordnet schema:
+cornetto:beInState a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5878> ;	
+	rdfs:subPropertyOf cornetto:internalRelation ;
+	rdfs:subPropertyOf skos:related;
+	rdfs:comment "A relation between two concepts where concept A is qualified by concept B (cf. STATE_OF)"@en;
+	rdfs:label "BE_IN_STATE"@en.
+cornetto:causes a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5827> ;	
+	rdfs:subPropertyOf cornetto:internalRelation ;
+	rdfs:subPropertyOf skos:related;
+	rdfs:label "causes"@en.
+cornetto:coAgentInstrument a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5879> ;	
+	rdfs:subPropertyOf skos:related;
+	rdfs:subPropertyOf cornetto:internalRelation ;
+	rdfs:label "co_agent_instrument"@en.
+cornetto:coAgentPatient a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5838> ;	
+	rdfs:subPropertyOf skos:related;
+	rdfs:subPropertyOf cornetto:internalRelation ;
+	rdfs:label "co-agent patient"@en.
+cornetto:coAgentResult a rdf:Property ; 
+        dcr:datcat <http://www.isocat.org/datcat/DC-5849> ;	
+	rdfs:subPropertyOf skos:related;
+	rdfs:subPropertyOf cornetto:internalRelation ;
+	rdfs:label "co-agent result"@en.
+cornetto:coInstrumentAgent a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5860> ;	
+	rdfs:subPropertyOf skos:related;
+	rdfs:subPropertyOf cornetto:internalRelation ;
+	rdfs:label "co-instrument agent in state"@en.
+cornetto:coInstrumentPatient a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5864> ;	
+	rdfs:subPropertyOf skos:related;
+	rdfs:subPropertyOf cornetto:internalRelation ;
+	rdfs:label "co-instrument patient"@en.
+cornetto:coInstrumentResult a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5876> ;	
+	rdfs:subPropertyOf skos:related;
+	rdfs:subPropertyOf cornetto:internalRelation ;
+	rdfs:label "co-instrument result"@en.
+cornetto:coPatientAgent a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5812> ;	
+	rdfs:subPropertyOf skos:related;
+	rdfs:subPropertyOf cornetto:internalRelation ;
+	rdfs:label "co patient agent"@en.
+cornetto:coPatientInstrument a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5806> ;	
+	rdfs:subPropertyOf skos:related;
+	rdfs:subPropertyOf cornetto:internalRelation ;
+	rdfs:label "co patient instrument"@en.
+cornetto:coResultAgent a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5807> ;	
+	rdfs:subPropertyOf skos:related;
+	rdfs:subPropertyOf cornetto:internalRelation ;
+	rdfs:label "co-result agent"@en.
+cornetto:coResultInstrument a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5808> ;	
+	rdfs:subPropertyOf skos:related;
+	rdfs:subPropertyOf cornetto:internalRelation ;
+	rdfs:label "co-result instrument"@en.
+cornetto:coRole a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5809> ;	
+	rdfs:subPropertyOf skos:related;
+	rdfs:subPropertyOf cornetto:internalRelation ;
+	rdfs:label "co-role"@en.
+cornetto:fuzzynym a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5832> ;
+	rdfs:comment "A relation between two concepts where concept A is strongly associated with concept B but no proper relation has been defined between the two."@en ;	       
+	rdfs:subPropertyOf skos:related;
+	rdfs:subPropertyOf cornetto:internalRelation ;
+	rdfs:label "fuzzynym"@en.
+cornetto:hasXposHyperonym a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5882> ;	
+	rdfs:subPropertyOf skos:related;
+	rdfs:subPropertyOf cornetto:internalRelation ;
+	rdfs:label "hasXposHyperonym"@en.
+cornetto:hasXposHyponym a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5848> ;	
+	rdfs:subPropertyOf cornetto:internalRelation ;
+	rdfs:subPropertyOf skos:related;
+	rdfs:label "hasXposHyponym"@en.
+cornetto:inManner a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5837> ;	
+	rdfs:subPropertyOf cornetto:internalRelation ;
+	rdfs:subPropertyOf skos:related;
+	rdfs:label "in manner"@en.
+cornetto:involved a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5847> ;	
+	rdfs:subPropertyOf cornetto:internalRelation ;
+	rdfs:subPropertyOf skos:related;
+	rdfs:label "involved"@en.
+cornetto:involvedAgent a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5885> ;	
+	rdfs:subPropertyOf cornetto:internalRelation ;
+	rdfs:subPropertyOf skos:related;
+	rdfs:label "involved agent"@en.
+cornetto:involvedDirection a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5845> ;	
+	rdfs:subPropertyOf cornetto:internalRelation ;
+	rdfs:subPropertyOf skos:related;
+	rdfs:label "involved direction"@en.
+cornetto:involvedInstrument a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5844> ;	
+	rdfs:subPropertyOf cornetto:internalRelation ;
+	rdfs:subPropertyOf skos:related;
+	rdfs:label "involved instrument"@en.
+cornetto:involvedLocation a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5843> ;	
+	rdfs:subPropertyOf cornetto:internalRelation ;
+	rdfs:subPropertyOf skos:related;
+	rdfs:label "involved location"@en.
+cornetto:involvedPatient a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5842> ;	
+	rdfs:subPropertyOf cornetto:internalRelation ;
+	rdfs:subPropertyOf skos:related;
+	rdfs:label "involved patient"@en.
+cornetto:involvedResult a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5841> ;	
+	rdfs:subPropertyOf cornetto:internalRelation ;
+	rdfs:subPropertyOf skos:related;
+	rdfs:label "involved result"@en.
+cornetto:involvedSourceDirection a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5840> ;	
+	rdfs:subPropertyOf cornetto:internalRelation ;
+	rdfs:subPropertyOf skos:related;
+	rdfs:label "involved source direction"@en.
+cornetto:involvedTargetDirection a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5815> ;	
+	rdfs:subPropertyOf cornetto:internalRelation ;
+	rdfs:subPropertyOf skos:related;
+	rdfs:label "involved target direction"@en.
+cornetto:isSubEventOf a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5818> ;	
+	rdfs:subPropertyOf cornetto:internalRelation ;
+	rdfs:subPropertyOf skos:related;
+	rdfs:label "is subevent of"@en.
+cornetto:hasSubEvent a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5853> ;	
+	rdfs:subPropertyOf cornetto:internalRelation ;
+	rdfs:subPropertyOf skos:related;
+	rdfs:label "has subevent"@en.
+cornetto:mannerOf a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5919> ;	
+	rdfs:subPropertyOf cornetto:internalRelation ;
+	rdfs:subPropertyOf skos:related;
+	rdfs:label "manner of"@en.
+cornetto:nearAntonym a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5971> ;	
+	rdfs:subPropertyOf cornetto:internalRelation ;
+	rdfs:subPropertyOf skos:related;
+	rdfs:label "near antonym"@en.
+cornetto:nearSynonym a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5972> ;	
+	rdfs:subPropertyOf cornetto:internalRelation ;
+	rdfs:subPropertyOf skos:related;
+	rdfs:label "near synonym"@en.
+cornetto:role a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5940> ;	
+	rdfs:subPropertyOf cornetto:internalRelation ;
+	rdfs:subPropertyOf skos:related;
+	rdfs:label "ROLE"@en.
+cornetto:roleAgent a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5939> ;	
+	rdfs:subPropertyOf cornetto:internalRelation ;
+	rdfs:subPropertyOf skos:related;
+	rdfs:label "ROLE_AGENT"@en.
+cornetto:roleDirection a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5863> ;	
+	rdfs:subPropertyOf cornetto:internalRelation ;
+	rdfs:subPropertyOf skos:related;
+	rdfs:label "ROLE_DIRECTION"@en.
+cornetto:roleInstrument a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5862> ;	
+	rdfs:subPropertyOf cornetto:internalRelation ;
+	rdfs:subPropertyOf skos:related;
+	rdfs:label "role instrument"@en.
+cornetto:roleLocation a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5861> ;	
+	rdfs:subPropertyOf cornetto:internalRelation ;
+	rdfs:subPropertyOf skos:related;
+	rdfs:label "role location"@en.
+cornetto:rolePatient a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5814> ;	
+	rdfs:subPropertyOf cornetto:internalRelation ;
+	rdfs:subPropertyOf skos:related;
+	rdfs:label "role patient"@en.
+cornetto:roleResult a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5835> ;	
+	rdfs:subPropertyOf cornetto:internalRelation ;
+	rdfs:subPropertyOf skos:related;
+	rdfs:label "role result"@en.
+cornetto:roleSourceDirection a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5834> ;	
+	rdfs:subPropertyOf cornetto:internalRelation ;
+	rdfs:subPropertyOf skos:related;
+	rdfs:label "role source direction"@en.
+cornetto:roleTargetDirection a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5833> ;	
+	rdfs:subPropertyOf cornetto:internalRelation ;
+	rdfs:subPropertyOf skos:related;
+	rdfs:label "role target direction"@en.
+cornetto:stateOf a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5825> ;	
+	rdfs:subPropertyOf cornetto:internalRelation ;
+	rdfs:subPropertyOf skos:related;
+	rdfs:label "state of"@en.
+cornetto:xposFuzzynym a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5822> ;	
+	rdfs:label "XPOS_FUZZYNYM"@en;
+	rdfs:comment "A relation between two concepts of different part of speech where concept A is strongly associated with concept B but no proper relation has been defined between the two."@en ;
+	rdfs:subPropertyOf cornetto:internalRelation ;
+	rdfs:subPropertyOf skos:related.
+cornetto:xposNearAntonym a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5829> ;	
+	rdfs:label "XPOS_NEAR_ANTONYM"@en;
+	rdfs:comment "A relation between two concepts of different part of speech where concept A has the opposite meaning to concept B."@en;
+	rdfs:subPropertyOf cornetto:internalRelation ;
+	rdfs:subPropertyOf skos:related.
+cornetto:xposNearSynonym a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5881> ;	
+	rdfs:label "XPOS_NEAR_SYNONYM"@en ;	
+	rdfs:comment "A relation between two concepts of different part of speech where concept A and concept B are similar in meaning."@en;
+	rdfs:subPropertyOf cornetto:internalRelation ;
+	rdfs:subPropertyOf skos:related.
+
+cornetto:isCausedBy a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5839> ;	
+	rdfs:subPropertyOf cornetto:internalRelation ;
+	rdfs:subPropertyOf skos:related;
+	rdfs:comment "A relation between two concepts where concept A comes into existence as a result of concept B. (cf. CAUSES)"@en ;
+	rdfs:label "IS_CAUSED_BY"@en.
+
+cornetto:coPatientResult a rdf:Property ;
+        rdfs:subPropertyOf cornetto:internalRelation ;
+        rdfs:subPropertyOf skos:related;
+        rdfs:label "coPatientResult"@en.
+
+cornetto:coResultPatient a rdf:Property ;
+        rdfs:subPropertyOf cornetto:internalRelation ;
+        rdfs:subPropertyOf skos:related;
+        rdfs:label "coResultPatient"@en.
+
+cornetto:hasHoloLocation a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5816> ;		
+        rdfs:subPropertyOf cornetto:internalRelation ;
+        rdfs:subPropertyOf skos:related;
+        rdfs:label "hasHoloLocation"@en.
+
+cornetto:hasHoloPortion a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5828> ;	
+        rdfs:subPropertyOf cornetto:internalRelation ;
+        rdfs:subPropertyOf skos:related;
+        rdfs:label "hasHoloPortion"@en.
+
+#
+#
+#
+#
+#
+#
+# External relations
+cornetto:externalRelation a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5886> ;	
+	rdfs:subPropertyOf cornetto:reltype ;
+	rdfs:label "Relation between Cornetto and other vocabulary"@en.
+
+# skos mapping relations:
+cornetto:eqHasSubEvent a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5852> ;	
+        rdfs:subPropertyOf cornetto:externalRelation ;
+        rdfs:subPropertyOf skos:relatedMatch;
+        rdfs:label "has subevent"@en.
+cornetto:eqIsStateOf a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5855> ;	
+        rdfs:subPropertyOf cornetto:externalRelation ;
+        rdfs:subPropertyOf skos:relatedMatch;
+        rdfs:label "is state of"@en.
+cornetto:eqNearSynonym a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5857> ;	
+	rdfs:subPropertyOf cornetto:externalRelation ;
+	rdfs:subPropertyOf skos:closeMatch;
+	rdfs:label "near synonym"@en.
+cornetto:eqSynonym a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5880> ;	
+	rdfs:subPropertyOf cornetto:externalRelation ;
+	rdfs:subPropertyOf skos:exactMatch;
+	rdfs:label "synonym"@en.
+cornetto:eqHasHyperonym a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5813> ;	
+	rdfs:subPropertyOf cornetto:externalRelation ;
+	rdfs:subPropertyOf skos:broadMatch;
+	rdfs:label "broader match"@en.
+cornetto:eqHasHyponym a rdf:Property ;  
+        dcr:datcat <http://www.isocat.org/datcat/DC-5850> ;	
+	rdfs:subPropertyOf cornetto:externalRelation ;
+	rdfs:subPropertyOf skos:narrowMatch;
+	rdfs:label "narrow match"@en.
+cornetto:eqHasHolonym a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5805> ;	
+	rdfs:subPropertyOf cornetto:externalRelation ;
+	rdfs:subPropertyOf skos:relatedMatch;
+	rdfs:label "has holonym match"@en.
+cornetto:eqRole a rdf:Property ;        
+        dcr:datcat <http://www.isocat.org/datcat/DC-5858> ;	
+	rdfs:subPropertyOf cornetto:externalRelation ;
+	rdfs:subPropertyOf skos:relatedMatch;
+	rdfs:label "has role match"@en.
+cornetto:eqInvolved a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5883> ;	
+	rdfs:subPropertyOf cornetto:externalRelation ;
+	rdfs:subPropertyOf skos:relatedMatch;
+	rdfs:label "involved match"@en.
+cornetto:eqCoRole a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5810> ;	
+	rdfs:subPropertyOf cornetto:externalRelation ;
+	rdfs:subPropertyOf skos:relatedMatch;
+	rdfs:label "co-role match"@en.
+cornetto:eqHasMeronym a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5851> ;	
+	rdfs:subPropertyOf cornetto:externalRelation ;
+	rdfs:subPropertyOf skos:relatedMatch;
+	rdfs:label "has-meronym match"@en.
+cornetto:eqCauses a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5877> ;	
+	rdfs:subPropertyOf cornetto:externalRelation ;
+	rdfs:subPropertyOf skos:relatedMatch;
+	rdfs:label "causes match"@en.
+cornetto:eqIsCausedBy a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5884> ;	
+	rdfs:subPropertyOf cornetto:externalRelation ;
+	rdfs:subPropertyOf skos:relatedMatch;
+	rdfs:label "is caused by match"@en.
+cornetto:eqBeInState a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5811> ;	
+	rdfs:subPropertyOf cornetto:externalRelation ;
+	rdfs:subPropertyOf skos:relatedMatch;
+	rdfs:label "be in state match"@en.
+cornetto:eqIsSubEventOf a rdf:Property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-5856> ;	
+	rdfs:subPropertyOf cornetto:externalRelation ;
+	rdfs:subPropertyOf skos:relatedMatch;
+	rdfs:label "is sub event of match"@en.

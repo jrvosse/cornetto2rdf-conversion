@@ -1,0 +1,57 @@
+# Cornetto RDFS schema
+
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:    <http://www.w3.org/2002/07/owl#> .
+@prefix vra:    <http://www.vraweb.org/vracore/vracore3#> .
+@prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
+@prefix wn20s:  <http://www.w3.org/2006/03/wn/wn20/schema/> .
+@prefix dc:     <http://purl.org/dc/terms/> .
+@prefix lemon:  <http://www.lemon-model.net/lemon#> .
+@prefix dcr:    <http://isocat.org/ns/dcr.rdf#> .
+
+@prefix cornetto: <http://purl.org/vocabularies/cornetto/21/schema/> .
+
+# Lexicon top level resource:
+<http://purl.org/vocabularies/cornetto/21/>
+	dcr:datcat <http://www.isocat.org/datcat/DC-4360> ; # Lexicon
+	a skos:ConceptScheme ;
+	a lemon:Lexicon ;
+	lemon:language "nl";
+	rdfs:label "Cornetto";
+	owl:versionInfo "2.1" ;
+	dc:title "Cornetto Dutch Lexical Database";
+	dc:date "2013-07-10" ;
+	dc:creator "Cornetto project, contact p.vossen (at) let.vu.nl"@en;
+	dc:creator "RDF conversion by Jan Wielemaker and Jacco van Ossenbruggen"@en;
+	dc:rights <http://www2.let.vu.nl/oz/cltl/cornetto/license.html> .
+
+# Properties and classes used by multiple levels:
+#
+# General purpose identifier attribute:
+cornetto:id a rdf:Property ;
+	rdfs:domain lemon:LemonElement ;
+	rdfs:range rdfs:Literal ;
+	rdfs:subPropertyOf skos:notation ;
+	rdfs:comment "identifier for lex. entries, senses and synsets"@en ;
+	rdfs:label "identifier"@en.
+
+# WordNet domains:
+cornetto:WordnetDomain a skos:Concept;
+	rdfs:label "Wordnet Domain"@en ;
+	rdfs:comment "Used to classify synsets and sense pragmatics"@en .
+
+cornetto:domain a rdf:Property ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-2212> ;
+	rdfs:label "domain"@en ;
+	rdfs:comment "area of activity, interest, or knowledge"@en ;
+	rdfs:domain lemon:LemonElement ;
+	rdfs:range cornetto:WordnetDomain .
+
+# Expression type base class:
+cornetto:ExpressionType a rdfs:Class .
+cornetto:expressionType rdfs:subPropertyOf lemon:property ;
+	rdfs:domain lemon:LemonElement ;
+	rdfs:range  cornetto:ExpressionType ;
+	dcr:datcat  <http://www.isocat.org/datcat/DC-5905> ;
+	rdfs:comment "expression types refer to a range of subtypes in accordance with the degree of semantic non-compositionalit and syntactic fixedness of the multiword expression"@en .

@@ -1,0 +1,112 @@
+# Cornetto RDFS schema
+
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:    <http://www.w3.org/2002/07/owl#> .
+@prefix vra:    <http://www.vraweb.org/vracore/vracore3#> .
+@prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
+@prefix wn20s:  <http://www.w3.org/2006/03/wn/wn20/schema/> .
+@prefix dc:     <http://purl.org/dc/terms/> .
+@prefix lemon:  <http://www.lemon-model.net/lemon#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> . 
+@prefix dcr:    <http://isocat.org/ns/dcr.rdf#> .
+@prefix cornetto: <http://purl.org/vocabularies/cornetto/21/schema/> .
+
+# Entry level:
+lemon:LexicalEntry 
+	dcr:datcat <http://www.isocat.org/datcat/DC-5505> .
+lemon:canonicalForm
+	dcr:datcat <http://www.isocat.org/datcat/DC-1324> .
+
+cornetto:PartOfSpeechType rdfs:subClassOf lemon:PropertyValue .
+cornetto:partOfSpeech rdfs:subPropertyOf lemon:property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-1345> ;
+	rdfs:domain lemon:LexicalEntry ;
+	rdfs:range cornetto:PartOfSpeechType .
+
+cornetto:noun a cornetto:PartOfSpeechType ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-1333> ;
+	rdfs:comment "word that can be combined with a demonstrative pronoun, while it is not a word form of another part of speech"@en .
+cornetto:verb a cornetto:PartOfSpeechType ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-1424>;
+        rdfs:comment "word that can be conjugated when combined with other words or groups of words in a sentence"@en .
+cornetto:adverb a cornetto:PartOfSpeechType ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-1232> ;
+        rdfs:comment "part of speech used to refer to a heterogeneous group of words whose most frequent function is to specify the mode of action of the verb."@en .
+cornetto:adjective  a cornetto:PartOfSpeechType ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-1230> ;
+	rdfs:comment "word characterizing an independent entity like a noun or its equivalent, while it is not a word form of another part of speech"@en .
+cornetto:other  a cornetto:PartOfSpeechType ;
+        rdfs:comment "used when PoS is unknown"@en.
+
+cornetto:auxilary rdfs:subPropertyOf lemon:property ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-2262> ;
+	rdfs:domain lemon:LexicalEntry ;
+	rdfs:range rdfs:Literal ;
+	rdfs:comment "relation between a subordinate verb ('hebben' vs. 'zijn') and the main verb"@en .
+
+cornetto:adverbialUsage rdfs:subPropertyOf lemon:property ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-5922> ;
+	rdfs:domain lemon:LexicalEntry ;
+	rdfs:range xsd:boolean ;
+	rdfs:comment "property of an adjective to be used also as an adverb (yes) or only as an adjective (no)"@en .
+
+cornetto:AdjectivePosistionType rdfs:subClassOf lemon:PropertyValue .
+cornetto:position rdfs:subPropertyOf lemon:property ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-5930> ;
+        rdfs:domain lemon:LexicalEntry ;
+	rdfs:range cornetto:AdjectivePosistionType ;    
+	rdfs:comment "refers to the property of an adjective to be used in attributive or predicative position or in both positions"@en .
+cornetto:attributive a cornetto:AdjectivePosistionType;
+	dcr:datcat <http://www.isocat.org/datcat/DC-5242> ;
+        rdfs:comment "An adjective that comes before a noun and not after a copula verb, like BE, SEEM, etc"@en .
+cornetto:predicative a cornetto:AdjectivePosistionType;
+	dcr:datcat <http://www.isocat.org/datcat/DC-4943> ;
+        rdfs:comment "indication that a word is realized at the position meant for the nonverbal part of a predicate or that of an adverb"@en .
+cornetto:attrpred a cornetto:AdjectivePosistionType;
+	dcr:datcat <http://www.isocat.org/datcat/DC-5791> ;
+        rdfs:comment "An adjective that can be used in both attributive and predicative position."@en.
+
+cornetto:Gender rdfs:subClassOf lemon:PropertyValue .
+cornetto:gender rdfs:subPropertyOf lemon:property ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-5793> ;
+	rdfs:domain lemon:LexicalEntry ;
+	rdfs:range cornetto:LexicalLengthType ;
+	rdfs:comment "Grammatical gender refers to the noun classification system that divides common nouns in classes like feminine, neuter and masculine.  Pronominal gender is the gender of the pronoun that refers to a noun. These types of gender are related but not identical. In Dutch, the pronominal gender may be determined by the grammatical or biological gender. In the Dutch language variant used in the Netherlands, however, (as opposed to Belgian Dutch) the feminine pronoun seems to disappear in favour of the masculine gender."@en .
+
+cornetto:mf a cornetto:Gender;
+	dcr:datcat <http://www.isocat.org/datcat/DC-5795> ;
+	rdfs:comment "pronominal gender is m (masculine)- grammatical gender is f (feminine)"@en .
+cornetto:mfn a cornetto:Gender;
+	dcr:datcat <http://www.isocat.org/datcat/DC-5796> ;
+	rdfs:comment "pronominal gender is  m (masculine) or f (feminine) depending on the biological gender, or n (neuter) - grammatical gender is n (neuter)"@en .
+cornetto:fn a cornetto:Gender;
+	dcr:datcat <http://www.isocat.org/datcat/DC-5797> ;
+	rdfs:comment "pronominal gender is feminine (f) - grammatical gender is neuter (n)"@en .
+cornetto:mn a cornetto:Gender;
+	dcr:datcat <http://www.isocat.org/datcat/DC-5798> ;
+	rdfs:comment "pronominal gender is m (masculine) - grammatical gender is n (neuter)"@en .
+cornetto:m_f a cornetto:Gender;
+	dcr:datcat <http://www.isocat.org/datcat/DC-5799> ;
+	rdfs:comment "pronominal gender is m (masculine) or f (feminine) depending on the biological gender"@en .
+cornetto:m a cornetto:Gender;
+	dcr:datcat <http://www.isocat.org/datcat/DC-5800> ;
+	rdfs:comment "grammatical and pronominal gender are m (masculine)"@en .
+cornetto:f a cornetto:Gender;
+	dcr:datcat <http://www.isocat.org/datcat/DC-5801> ;
+	rdfs:comment "grammatical and pronominal gender are f (feminine)"@en .
+cornetto:n a cornetto:Gender;
+	dcr:datcat <http://www.isocat.org/datcat/DC-5802> ;
+	rdfs:comment "grammatical and pronominal gender are n (neuter)"@en .
+
+cornetto:LexicalLengthType rdfs:subClassOf lemon:PropertyValue .
+cornetto:abbreviatedForm rdfs:subPropertyOf lemon:property ;
+	rdfs:domain lemon:LexicalEntry ;
+	rdfs:range cornetto:LexicalLengthType .
+cornetto:Abbreviation a cornetto:LexicalLengthType ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-331> ;
+	rdfs:comment "indication that a word resulted by leaving out characters of a longer word or words, keeping the original meaning, while the resulting word is not considered a proper noun nor behaves as a common noun"@en .
+cornetto:Acronym a cornetto:LexicalLengthType ;
+	rdfs:comment "An abbreviation made up of the initial letters of the components of the full form of the designation or from syllables of the full form and pronounced syllabically."@en .
+cornetto:Contraction a cornetto:LexicalLengthType ;
+	rdfs:comment "A lexical unit formed by a shortening of a word, syllable, or word group by omission of a sound or letter."@en .

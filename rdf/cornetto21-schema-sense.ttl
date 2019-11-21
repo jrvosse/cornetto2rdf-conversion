@@ -1,0 +1,310 @@
+# Cornetto RDFS schema
+
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:    <http://www.w3.org/2002/07/owl#> .
+@prefix vra:    <http://www.vraweb.org/vracore/vracore3#> .
+@prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
+@prefix wn20s:  <http://www.w3.org/2006/03/wn/wn20/schema/> .
+@prefix dc:     <http://purl.org/dc/terms/> .
+@prefix lemon:  <http://www.lemon-model.net/lemon#> .
+@prefix dcr:    <http://isocat.org/ns/dcr.rdf#> .
+@prefix cornetto: <http://purl.org/vocabularies/cornetto/21/schema/> .
+
+# Sense Level
+lemon:LexicalSense 
+     dcr:datcat <http://www.isocat.org/datcat/DC-464> .
+lemon:UsageExample
+     dcr:datcat <http://www.isocat.org/datcat/DC-5673> .
+	
+# Sense Relations
+cornetto:senseGroupRelationType rdfs:subPropertyOf lemon:property ;
+ 	dcr:datcat <http://www.isocat.org/datcat/DC-5794> ;
+	rdfs:domain lemon:LexicalSense ;
+	rdfs:range lemon:LexicalSense ;
+	rdfs:comment """Relations between senses.
+
+We derived 4 sets of sense-groups for lemmas based on different relations. A sense-group is a set of meanings of a word that are semantically close and therefore difficult to discriminate both for humans and machines. Metonymy, specialization and generalization of meaning of words can lead to closely related meanings that are compatible and can apply simultaneously in a context. An example of metonymy is "academie" (academy) referring to
+the institution or the building. A case of specialization/generalization is "behandeling" (treatment), referring to a medical treatment but also to treatment in general.
+
+Metaphorical meanings are considered not to be compatible: i.e. in a context both meanings
+cannot both be true or relevant. E.g. "slang" (snake) can refer to the animal, a person, a tube or a snake-like stricture or form but never to combinations. Unrelated meanings are
+often coming from different origins and have the same spelling by accident, e.g. "school" (school), referring to an educational institution or a group of fish. Both metaphorical and unrelated senses are intended to be excluded from sense-groups because their meanings
+are not compatible and can more easily be distinguished.
+
+By distinguishing sense-groups it is possible to apply WSD at different levels of precision and relevance.
+"""@en .
+
+cornetto:co-annotation rdfs:subPropertyOf cornetto:senseGroupRelationType ;
+ 	dcr:datcat <http://www.isocat.org/datcat/DC-5912> ;
+	rdfs:comment "senses of one word that were both assigned to a single token in the corpus during manual sense-tagging in the DutchSemCor-project."@en .
+cornetto:co-hyponyms rdfs:subPropertyOf cornetto:senseGroupRelationType ;
+ 	dcr:datcat <http://www.isocat.org/datcat/DC-5913> ;
+	rdfs:comment "senses of one word that belong to synsets that have the same hypernym"@en .
+cornetto:co-relations rdfs:subPropertyOf cornetto:senseGroupRelationType ;
+ 	dcr:datcat <http://www.isocat.org/datcat/DC-5914> ;
+	rdfs:comment "senses of one word that belong to synsets that have a direct semantic relation, e.g. NEAR_SYNONYM, SUBEVENT, RESULT, PART, etc."@en .
+cornetto:co-synonyms rdfs:subPropertyOf cornetto:senseGroupRelationType ;
+ 	dcr:datcat <http://www.isocat.org/datcat/DC-5915> ;
+	rdfs:comment "senses of one word that belong to synsets that have more than one synonym in common, i.e. in addition to the lemma itself there is at least lemma that occurs in both synsets."@en .
+
+# Counting
+cornetto:CountabilityClass rdfs:subClassOf lemon:PropertyValue .
+cornetto:countability rdfs:subPropertyOf lemon:property ;
+	rdfs:domain lemon:LexicalSense ;
+	rdfs:range cornetto:CountabilityClass ;
+	rdfs:comment "Countability is motivated by the semantic distinction between object and substance reference."@en .
+cornetto:count a cornetto:CountabilityClass ;
+	rdfs:comment "noun referring to one or several concepts that may be counted"@en .
+cornetto:plurtant a cornetto:CountabilityClass ;
+	rdfs:comment "Plurale Tantum is a noun that appears only in the plural form and does not have a singular variant for referring to a single object."@en .
+cornetto:mass a cornetto:CountabilityClass ;
+        rdfs:comment "Designation of a term or word that is not countable and cannot generally be used with the indefinite article or in the plural."@en .
+cornetto:coll a cornetto:CountabilityClass ;
+        rdfs:comment "A collective noun is the name of a number (or collection) of people or things taken together and spoken of as one whole."@en .
+
+# not used: 
+# cornetto:uncount a cornetto:CountabilityClass ;
+#       rdfs:comment "An uncountable noun is a noun with the property that any quantity of it is treated as an undifferentiated unit, rather than as something with discrete subsets."@en .
+
+
+# Common or proper noun
+cornetto:CommonOrProperNoun rdfs:subClassOf lemon:PropertyValue . 
+cornetto:commonProper rdfs:subPropertyOf lemon:property ;
+	rdfs:domain lemon:LexicalSense ;
+	rdfs:range cornetto:CommonOrProperNoun;
+	rdfs:comment "attribute dealing with the type of noun, like common and proper"@en .
+cornetto:common a cornetto:CommonOrProperNoun ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-4910> ;
+	rdfs:comment "Noun that signifies a non-specific member of a group."@en .
+cornetto:proper a cornetto:CommonOrProperNoun ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-4911> ;
+	rdfs:comment "Noun that is the name of a specific individual, place, or object."@en .
+
+# semantic Types
+cornetto:SemanticType rdfs:subClassOf lemon:PropertyValue ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-5973> ;
+	rdfs:comment "a semantic Type is part of a set of values that categorizes concepts in a given domain according to their semantic characteristics"@en .
+cornetto:SemanticNounType rdfs:subClassOf cornetto:SemanticType .
+cornetto:SemanticVerbType rdfs:subClassOf cornetto:SemanticType .
+cornetto:SemanticAdjectiveType rdfs:subClassOf cornetto:SemanticType .
+
+cornetto:semanticType rdfs:subPropertyOf lemon:property .
+cornetto:semanticNounType rdfs:subPropertyOf cornetto:semanticType ;
+	rdfs:domain lemon:LexicalSense ;
+	rdfs:range cornetto:SemanticNounType .
+cornetto:semanticVerbType rdfs:subPropertyOf cornetto:semanticType ;
+	rdfs:domain lemon:LexicalSense ;
+	rdfs:range cornetto:SemanticVerbType .
+cornetto:semanticAdjectiveType rdfs:subPropertyOf cornetto:semanticType ;
+	rdfs:domain lemon:LexicalSense ;
+	rdfs:range cornetto:SemanticAdjectiveType .
+
+
+
+cornetto:nondynamic a cornetto:SemanticNounType ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-5981> ;
+	rdfs:comment "abstract concept not involving change or internal stages"@en .
+cornetto:artefact a cornetto:SemanticNounType ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-5991> ;
+	rdfs:comment "refers to physical entities constructed by man"@en .
+cornetto:human a cornetto:SemanticNounType ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-5978> ;
+	rdfs:comment "animate and human being (cf. nonhuman)"@en .
+cornetto:dynamic a cornetto:SemanticNounType ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-5977> ;
+	rdfs:comment "abstract concept involving change or  internal stages"@en .
+cornetto:concrother a cornetto:SemanticNounType ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-5976> ;
+	rdfs:comment "refers to concepts which are concrete, but not substance or artefact"@en .
+cornetto:place a cornetto:SemanticNounType , cornetto:SemanticAdjectiveType ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-5988> ;
+	rdfs:comment "a point or an area on the Earth's surface or elsewhere"@en .
+cornetto:substance a cornetto:SemanticNounType ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-5983> ;
+	rdfs:comment "nonanimate and material substances, incl. natural kinds"@en .
+cornetto:institute a cornetto:SemanticNounType ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-5979> ;
+	rdfs:comment "groups and organizations that can act as an agent"@en .
+cornetto:animate a cornetto:SemanticNounType ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-5777> ;
+	rdfs:comment "Perceived as alive."@en . 
+cornetto:time a cornetto:SemanticNounType ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-5975> ;
+	rdfs:comment "specifying a period or moment in time"@en .
+cornetto:measure a cornetto:SemanticNounType ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-5980> ;
+	rdfs:comment "nonanimate and a unit of length, measure, distance, money etc."@en .
+cornetto:concrete a cornetto:SemanticNounType ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-5984> ;
+	rdfs:comment "A concrete object is an object which exists at a particular time or place. It is the opposite of abstract."@en .
+cornetto:abstract a cornetto:SemanticNounType , cornetto:SemanticAdjectiveType ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-5979> ;
+	rdfs:comment "abstract semantic noun type"@en .
+cornetto:action a cornetto:SemanticNounType ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-5974> ;
+	rdfs:comment "Action verbs are verbs that describe actions and things taking place rather than states. Unlike most stative verbs, an action verb can usually be used in the progressive aspect, which is used for actions that are in progress."@en .
+cornetto:process a cornetto:SemanticNounType ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-5985> ;
+	rdfs:comment "refers to phenomenon  marked by changes through a series of states"@en .
+cornetto:state a cornetto:SemanticNounType ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-5986> ;
+	rdfs:comment "refers to situations or conditions that are static"@en .
+cornetto:emomen a cornetto:SemanticAdjectiveType ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-5990> ;
+	rdfs:comment "referring to emotional or mental properties"@en .
+cornetto:phyper a cornetto:SemanticAdjectiveType ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-5989> ;
+	rdfs:comment "refers to physical or perceptive properties"@en .
+cornetto:colour a cornetto:SemanticAdjectiveType ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-5987> ;
+	rdfs:comment "refers to colour"@en .
+
+cornetto:stuff a cornetto:SemanticAdjectiveType .
+cornetto:temp a cornetto:SemanticAdjectiveType .
+
+# Pragmatics
+cornetto:Pragmatics rdfs:subClassOf lemon:SenseContext ;
+	rdfs:comment "Pragmatic context of a sense or sense example"@en .
+cornetto:pragmatics rdfs:subPropertyOf lemon:context ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-2643> ; # ?
+	rdfs:domain lemon:LexicalSense ;
+	rdfs:range  cornetto:Pragmatics ;
+	rdfs:comment "properties related to the context in which the sense(example) is used"@en .
+
+cornetto:GeographyType a rdfs:Class ;
+	rdfs:comment "Regional occurrence of a word"@en .
+cornetto:geography rdfs:subPropertyOf lemon:property ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-5935> ; 
+	rdfs:domain cornetto:Pragmatics ;
+	rdfs:range  cornetto:GeographyType ;
+	rdfs:comment "Regional occurrence of a word"@en .
+cornetto:belg a cornetto:GeographyType ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-5936> ; 
+	rdfs:comment "used for words that are more frequently used in Belgian Dutch than in Dutch as used the Netherlands"@en .
+cornetto:dialect a cornetto:GeographyType .
+
+cornetto:ChronologyType a rdfs:Class ;
+	rdfs:comment "the use of a word is related to a certain period in time"@en .
+cornetto:chronology rdfs:subPropertyOf lemon:property ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-5921> ; 
+	rdfs:domain  cornetto:Pragmatics ;
+	rdfs:range cornetto:ChronologyType ;
+	rdfs:comment "the use of a word is related to a certain period in time"@en .
+cornetto:oldfashioned a cornetto:ChronologyType ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-5787> ; 
+	rdfs:comment "A term or lexeme that has fallen from fashion, but the meaning of which is readily recognizable."@en .
+cornetto:neologism a cornetto:ChronologyType ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-513> ; 
+	rdfs:comment "A newly coined term."@en .
+
+cornetto:RegisterType a rdfs:Class ;
+	rdfs:comment "the way in which something is said or written."@en .
+cornetto:register rdfs:subPropertyOf lemon:property ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-1988> ; 
+	rdfs:domain  cornetto:Pragmatics ;
+	rdfs:range  cornetto:RegisterType ;
+	rdfs:comment "the way in which something is said or written."@en .
+cornetto:informal a cornetto:RegisterType ;
+	rdfs:comment "Language use characterized by spontaneous speech."@en .
+cornetto:formal a cornetto:RegisterType ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-1992> ; 
+	rdfs:comment "A broad term for speech or writing marked by an impersonal, objective, and precise use of language."@en .
+cornetto:vulgar a cornetto:RegisterType ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-1998> ; 
+	rdfs:comment "Register of a term or text type that can be characterized as profane or socially unacceptable."@en .
+cornetto:slang a cornetto:RegisterType ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-1995> ; 
+	rdfs:comment "An extremely informal register of a word, term, or text that is used in spoken and everyday language and less commonly in documents."@en .
+
+cornetto:ConnotationType a rdfs:Class ;
+	rdfs:comment "A connotation is a commonly understood subjective cultural or emotional association that some word or phrase carries, in addition to the word's or phrase's explicit or literal meaning, which is its denotation."@en .
+cornetto:connotation rdfs:subPropertyOf lemon:property ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-5929> ; 
+	rdfs:domain  cornetto:Pragmatics ;
+	rdfs:range  cornetto:ConnotationType .
+cornetto:pejorative a cornetto:ConnotationType ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-5933> ; 
+	rdfs:comment "A word or grammatical form that connotes negativity and expresses a contempt or distaste."@en .
+cornetto:offensive a cornetto:ConnotationType ;
+	rdfs:comment "Register that expresses a situation that people should avoid because it is extremely offensive or embarrassing."@en .
+cornetto:jocular a cornetto:ConnotationType ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-5932> ; 
+	rdfs:comment "Fond of or characterized by joking- humorous or playful."@en .
+cornetto:euphemistic a cornetto:ConnotationType ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-5931> ; 
+	rdfs:comment "Innocuous word, name, or phrase that replaces an offensive or suggestive one."@en .
+
+# Sentiment
+cornetto:PolarityType a lemon:PropertyValue .
+cornetto:polarity rdfs:subPropertyOf lemon:property ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-5537> ; 
+	rdfs:comment "polarity refers to the property of a word in a particular sense to express attitude. Usually there are 3 values: positive , negative or neutral (no) attitude"@en ;
+	rdfs:domain lemon:LexicalSense ;
+	rdfs:range cornetto:PolarityType .
+cornetto:positive a cornetto:PolarityType ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-5538> ; 
+	rdfs:comment "the property of a word (sense) to express a positive attitude"@en .
+cornetto:negative a cornetto:PolarityType ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-5540> ; 
+	rdfs:comment "the property of a word (sense) to express a negative attitude"@en .
+
+# Semantic Examples
+cornetto:definition rdfs:subPropertyOf lemon:property ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-1972> ; 
+	rdfs:comment "Definition of a sense example"@en ;
+	rdfs:domain lemon:UsageExample ;
+	rdfs:range  rdfs:Literal .
+cornetto:textualForm rdfs:subPropertyOf lemon:property ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-6001> ; 
+	rdfs:comment "The textual form is an representation of an example as a fully inflected sentence -- if it is combined with a canonical form, it is an illustration of the latter in a broader context."@en ;
+	rdfs:domain lemon:UsageExample ;
+	rdfs:range  rdfs:Literal .
+
+# Phrase structure
+cornetto:PhraseStructure a rdfs:Class .
+cornetto:phraseType rdfs:subPropertyOf lemon:property ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-5769> .
+cornetto:VerbPhraseStructure rdfs:subClassOf cornetto:PhraseStructure ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-2255> ;
+	rdfs:comment "phrase headed by a verb"@en .
+cornetto:NounPhraseStructure rdfs:subClassOf cornetto:PhraseStructure ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-2256> ;
+	rdfs:comment "phrase headed by a noun"@en .
+cornetto:SentenceStructure rdfs:subClassOf cornetto:PhraseStructure ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-1386> ;
+	rdfs:comment "A sequence of words capable of standing alone to make an assertion, ask a question, or give a command, usually consisting of a subject and a predicate containing a finite verb."@en .
+cornetto:PPStructure rdfs:subClassOf cornetto:PhraseStructure ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-5768> ;
+	rdfs:comment "phrase beginning by one or several prepositions and a complement such as a noun phrase"@en .
+cornetto:APStructure rdfs:subClassOf cornetto:PhraseStructure ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-5767> ;
+	rdfs:comment "phrase headed by an adjective"@en .
+
+cornetto:SenseExpressionType rdfs:subClassOf cornetto:ExpressionType ;
+	rdfs:comment "expression types refer to a range of subtypes in accordance with the degree of semantic non-compositionality and syntactic fixedness of the multiword expression"@en .
+
+cornetto:senseExpressionType rdfs:subPropertyOf cornetto:expressionType ;
+	rdfs:domain lemon:UsageExample ;
+	rdfs:range cornetto:SenseExpressionType .
+
+cornetto:freeCombination a cornetto:SenseExpressionType ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-5910> ; 
+	rdfs:comment "a free word combination which is semantically completely transparent and syntactically not fixed"@en.
+cornetto:lexicalCollocation a cornetto:SenseExpressionType ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-5906> ; 
+	rdfs:comment "a collocation (a combination of frequently co-occurrung words) of two or more content words, i.e. nouns, verbs and adjectives and adverbs. Collocations are syntactically fixed and semantically transparent"@en .
+cornetto:grammaticalCollocation a cornetto:SenseExpressionType ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-5907> ; 
+	rdfs:comment "a collocation (a combination of frequently co-occurrung words) of function words (e.g a preposition or determiner) and content words  (i.e. a noun, verb, adjective or adverb). Collocations are syntactically fixed and semantically transparent."@en .
+cornetto:pragmaticFormula a cornetto:SenseExpressionType ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-5908> ; 
+	rdfs:comment "a combination of words used repeatedly and always in the same form.  They are \"highly conventionalized prepatterned expressions whose occurrence is tied to more or less standardized communication situations\" (Coulmas, F. (1981) Conversational Routine)"@en .
+cornetto:term a cornetto:SenseExpressionType ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-5788> ; 
+	rdfs:comment "A verbal designation of a general concept in a specific subject field."@en .
+cornetto:properName a cornetto:SenseExpressionType ;
+	rdfs:comment "a noun that is the name of a specific individual, place, or object"@en .
+cornetto:slogan a cornetto:SenseExpressionType ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-5909> ; 
+	rdfs:comment "a memorable phrase often used in a political, commercial, religious, and or other context as a repetitive expression of an idea or purpose (en.wikipedia.org/wiki/slogan)" .

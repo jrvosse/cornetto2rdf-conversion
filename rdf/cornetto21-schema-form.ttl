@@ -1,0 +1,79 @@
+# Cornetto RDFS schema: Lexicial Forms
+
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:    <http://www.w3.org/2002/07/owl#> .
+@prefix vra:    <http://www.vraweb.org/vracore/vracore3#> .
+@prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
+@prefix wn20s:  <http://www.w3.org/2006/03/wn/wn20/schema/> .
+@prefix dc:     <http://purl.org/dc/terms/> .
+@prefix lemon:  <http://www.lemon-model.net/lemon#> .
+@prefix dcr:    <http://isocat.org/ns/dcr.rdf#> .
+@prefix cornetto: <http://purl.org/vocabularies/cornetto/21/schema/> .
+
+# Form level
+cornetto:article rdfs:subPropertyOf lemon:property ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-1892> ;
+	rdfs:domain lemon:Form ;
+	rdfs:range rdfs:Literal;
+	rdfs:comment "Definite article (de/het) which is used for singular elements"@en .
+
+cornetto:TenseType rdfs:subClassOf lemon:PropertyValue.
+cornetto:tense rdfs:subPropertyOf lemon:property ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-1286> ;
+	rdfs:domain lemon:Form ;
+	rdfs:range  cornetto:TenseType ;
+	rdfs:comment "Property referring to the way the grammar marks the time at which the action denoted by the verb took place."@en .
+cornetto:pastTense a cornetto:TenseType ;
+	rdfs:comment "Past tense is an absolute tense that refers to a time before the moment of utterance"@en .
+cornetto:pastParticiple a cornetto:TenseType ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-4963> ;
+	rdfs:comment "non-finite form of a verb expressing an event as completed"@en.
+
+cornetto:RelatedForm  rdfs:subClassOf lemon:Form ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-5998> .
+cornetto:hasRelatedForm rdfs:subPropertyOf lemon:otherForm .
+cornetto:spellingVariant rdfs:subClassOf cornetto:RelatedForm ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-5918> ;
+	rdfs:comment "Variants with different written spelling but with the same pronunciation."@en .
+cornetto:formVariant rdfs:subClassOf cornetto:RelatedForm ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-5917> ;
+        rdfs:comment "Variants with different written spelling and pronunciation."@en .
+
+cornetto:MWEExpressionType rdfs:subClassOf cornetto:ExpressionType ;
+        rdfs:comment "expression types refer to a range of subtypes in accordance with the degree of semantic non-compositionality and syntactic fixedness of the multiword expression"@en .
+cornetto:mweExpressionType rdfs:subPropertyOf cornetto:expressionType ;
+	rdfs:domain lemon:Form ;
+	rdfs:range cornetto:MWEExpressionType .
+cornetto:idiom a cornetto:MWEExpressionType ;
+	rdfs:comment "a group of words in a fixed order that have a particular meaning that is different from the meaning of each word understood on its own"@en .       
+cornetto:proverb a cornetto:MWEExpressionType ;
+	rdfs:comment "a brief popular axiom or saying"@en .
+	 
+
+cornetto:GrammaticalNumberType rdfs:subClassOf lemon:PropertyValue .
+cornetto:singular a cornetto:GrammaticalNumberType ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-252> ;
+	rdfs:comment "Value that expresses one element"@en .
+cornetto:plural a cornetto:GrammaticalNumberType ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-253> ;
+	rdfs:comment "Value that expresses more than one element"@en .
+cornetto:grammaticalNumber rdfs:subPropertyOf lemon:property ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-251> ;
+	rdfs:domain lemon:Form ;
+	rdfs:range cornetto:GrammaticalNumberType;
+	rdfs:comment "Grammatical category for the variation in form of nouns, pronouns, and any words agreeing with them, depending on how many persons or things are referred to"@en .
+
+cornetto:ComparisonType rdfs:subClassOf lemon:PropertyValue .
+cornetto:comparison rdfs:subPropertyOf lemon:property ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-4920> ; # degree
+	rdfs:domain lemon:Form ;
+	rdfs:range cornetto:ComparisonType;
+	rdfs:comment "characterization of the degree of intensity of a specific feature by affixes (suffix, infix) or by suppletion"@en .
+cornetto:superlative a cornetto:ComparisonType ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-4925> ;
+	rdfs:comment "value expressing (via affix or suppletion) the highest level of intensity of the named feature"@en .
+cornetto:comparative a cornetto:ComparisonType ;
+	dcr:datcat <http://www.isocat.org/datcat/DC-4924> ;
+	rdfs:comment "value expressing (via affix, suppletion) a higher than basic level of intensity of the named feature, while it is not the highest level"@en .
+

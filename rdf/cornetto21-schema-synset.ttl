@@ -1,0 +1,31 @@
+# Cornetto RDFS schema
+
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:    <http://www.w3.org/2002/07/owl#> .
+@prefix vra:    <http://www.vraweb.org/vracore/vracore3#> .
+@prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
+@prefix wn20s:  <http://www.w3.org/2006/03/wn/wn20/schema/> .
+@prefix dc:     <http://purl.org/dc/terms/> .
+@prefix lemon:  <http://www.lemon-model.net/lemon#> .
+@prefix dcr:    <http://isocat.org/ns/dcr.rdf#> .
+@prefix cornetto: <http://purl.org/vocabularies/cornetto/21/schema/> .
+
+# Synset Level see also the synset relations defined elsewhere
+cornetto:Synset a rdfs:Class ;
+        dcr:datcat <http://www.isocat.org/datcat/DC-4613> ;
+	rdfs:subClassOf skos:Concept ;
+	rdfs:label "synset" ;
+	rdfs:comment "synset base class (also used if part of speech undefined)"@en.
+cornetto:NounSynset a rdfs:Class ;
+	rdfs:subClassOf cornetto:Synset ;
+	rdfs:label "noun synset"@en.
+cornetto:VerbSynset a rdfs:Class ;
+	rdfs:subClassOf cornetto:Synset ;
+	rdfs:label "verb synset"@en.
+cornetto:AdverbSynset a rdfs:Class ;
+	rdfs:subClassOf cornetto:Synset ;
+	rdfs:label "adverb synset"@en.
+cornetto:AdjectiveSynset a rdfs:Class ;
+	rdfs:subClassOf cornetto:Synset ;
+	rdfs:label "adjective synset"@en.
