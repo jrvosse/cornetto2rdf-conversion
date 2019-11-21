@@ -1,5 +1,7 @@
 :- module(rewrite_lmf_uris,
 	  [ lexicon/2,
+	    target_lexicon/1,
+	    instance_namespace/2,
 	    ls_uri/2,
 	    le_uri/2,
 	    le_id_uri/2,
@@ -36,8 +38,12 @@ internal_relations_edoal(URI) :-
 wn_relations_edoal(Lex, URI) :-
 	rdf_global_id(corn21r:Lex, URI).
 
+target_lexicon(odwn13).
+instance_namespace(odwn13, odwn13i).
+instance_namespace(corn21, corn21i).
 lexicon(cornetto21, 'http://purl.org/vocabularies/cornetto/21/').
 lexicon(cornetto12, 'http://purl.org/vocabularies/cornetto').
+lexicon(odwn13,     'http://purl.org/vocabularies/odwn13/').
 lexicon(wn20,       'http://www.w3.org/2006/03/wn/wn20/').
 lexicon(wn30, Lex) :- rdf_equal(wn30:'', Lex).
 
@@ -47,18 +53,24 @@ lmf_literal_to_id(List, Namespace, IRI) :-
 
 ls_uri(LU, URI) :-
 	rdf(LU, lmf:id, literal(Id)),
-	lmf_literal_to_id(['sense-', Id], corn21i, URI).
+	target_lexicon(Lexicon),
+	instance_namespace(Lexicon, Namespace),
+	lmf_literal_to_id(['sense-', Id], Namespace, URI).
 
 ex_uri(Ex, URI) :-
 	rdf(Ex, lmf:id, literal(Id)),
-	lmf_literal_to_id(['ex-', Id], corn21i, URI).
+	target_lexicon(Lexicon),
+	instance_namespace(Lexicon, Namespace),
+	lmf_literal_to_id(['ex-', Id], Namespace, URI).
 
 le_uri(LU, URI) :-
 	rdf(LU, lmf:id, literal(Id)),
 	le_id_uri(Id, URI).
 
 le_id_uri(Id, URI) :-
-	lmf_literal_to_id(['entry-', Id], corn21i, URI).
+	target_lexicon(Lexicon),
+	instance_namespace(Lexicon, Namespace),
+	lmf_literal_to_id(['entry-', Id], Namespace, URI).
 
 
 synset_uri(unknown_000, _URI):-
@@ -69,7 +81,9 @@ synset_uri(Id, URI):-
 	% Strip of the nld-21- prefix
 	atomic_list_concat([_Lang, _Version|IdList], -, Id),
 	atomic_list_concat(IdList, -, Id2),
-	lmf_literal_to_id(['synset-', Id2], corn21i, URI).
+	target_lexicon(Lexicon),
+	instance_namespace(Lexicon, Namespace),
+	lmf_literal_to_id(['synset-', Id2], Namespace, URI).
 
 wn_uri(ID, Scheme, Target_URI) :-
 	atomic_list_concat([_Lang, _Version, Num ,PosTag], -, ID),
