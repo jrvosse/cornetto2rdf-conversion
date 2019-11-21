@@ -1,0 +1,164 @@
+@prefix     void: <http://rdfs.org/ns/void#> .
+@prefix     vann: <http://purl.org/vocab/vann/> .
+@prefix      lib: <http://www.swi-prolog.org/rdf/library/> .
+@prefix      owl: <http://www.w3.org/2002/07/owl#> .
+@prefix      rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix     rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix      xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix       dc: <http://purl.org/dc/terms/> .
+@prefix      lemon: <http://www.lemon-model.net/lemon#> .
+@prefix cornetto12:  <http://purl.org/vocabularies/cornetto/> .
+@prefix cornetto21:  <http://purl.org/vocabularies/cornetto/21/> .
+@prefix cornetto21s: <http://purl.org/vocabularies/cornetto/21/schema/> .
+@prefix cornetto21i: <http://purl.org/vocabularies/cornetto/21/instances/> .
+@prefix download21:  <http://purl.org/vocabularies/cornetto/21/download/> .
+
+[ vann:preferredNamespacePrefix "cornetto21" ;
+  vann:preferredNamespaceUri "http://purl.org/vocabularies/cornetto/21/"
+] .
+[ vann:preferredNamespacePrefix "cornetto21s" ;
+  vann:preferredNamespaceUri "http://purl.org/vocabularies/cornetto/21/schema/"
+] .
+[ vann:preferredNamespacePrefix "cornetto21i" ;
+  vann:preferredNamespaceUri "http://purl.org/vocabularies/cornetto/21/instances/"
+] .
+
+[ vann:preferredNamespacePrefix "lemon" ;
+  vann:preferredNamespaceUri "http://www.lemon-model.net/lemon#"
+] .
+
+<cornetto21>
+        a void:Dataset ;
+        lib:source download21: ;
+        dc:title "Cornetto 2.1" ;
+	dc:description """Dutch lexical resource, mapped to W3C WordNet.  
+			Full dataset, except for 
+			- the EDOAL format versions of the synset relations,
+			- the versionless hub links across versions."""@en ;
+        owl:versionInfo "2.1 alpha" ;
+	void:subset
+		<cornetto21Schema> ,
+		<cornetto21LexicalCore> ,
+		<cornetto21SenseExtras> ,
+		<cornetto21Synsets> ,
+		<cornetto21SkosMapping> ,
+		<cornetto21WNMappings> .
+
+<cornetto21full>
+        a void:Dataset ;
+	a lib:CloudNode ;
+        lib:source download21: ;
+        dc:title "Cornetto 2.1 complete dataset" ;
+        owl:versionInfo "2.1 alpha" ;
+	void:subset
+		<cornetto21> ,
+		<cornetto21hub> ,
+		<cornetto21edoal> .
+
+<cornetto21Schema>
+	a void:Dataset ;
+        lib:source download21: ;
+        dc:title "Cornetto 2.1 RDFS Schema (including lemon)" ;
+	dc:description "Schemas for Dutch Wordnet, a lexical resource mapped to WordNet" ;
+	void:subset
+		<lemonSchema> ;
+	void:dataDump
+                <cornetto21-schema-main.ttl> ,
+                <cornetto21-schema-form.ttl> ,
+                <cornetto21-schema-entry.ttl> ,
+                <cornetto21-schema-sense.ttl> ,
+                <cornetto21-schema-synset.ttl> ,
+                <cornetto21-schema-relations.ttl> .
+
+<cornetto21LexicalCore>
+        a void:Dataset ;
+        lib:source download21: ;
+        dc:title "Cornetto Lexical Entries, Forms and Senses" ;
+	void:subset
+		<cornetto21-entries.ttl> ,
+		<cornetto21-lexforms.ttl> ,
+		<cornetto21-senses.ttl> .
+
+<cornetto21SenseExtras>
+        a void:Dataset ;
+        lib:source download21: ;
+        dc:title "Cornetto Sense pragmatics and sense examples." ;
+	void:subset
+		<cornetto21-sense-examples.ttl> ,
+		<cornetto21-sense-pragmatics.ttl> .
+
+<cornetto21Synsets>
+        a void:Dataset ;
+        lib:source download21: ;
+        dc:title "Cornetto synsets" ;
+	void:subset
+		<cornetto21-synsets.ttl> ,
+		<cornetto21-synset-relations.ttl> ,
+		<cornetto21-synset-types.ttl> .
+
+<cornetto21WNMappings>
+        a void:Dataset ;
+        lib:source download21: ;
+        dc:title "Cornetto mappings to WordNet 2.0, 3.0 and wordnet domains." ;
+	void:subset
+		<cornetto21-wordnet-domainspec.ttl> ,
+		<cornetto21-wordnet-domains.ttl> ,
+		<cornetto21-wn30-mapping.ttl> ,
+		<cornetto21-wn20-mapping.ttl> .
+
+<cornetto21SkosMapping>
+	a void:Dataset ;
+	dc:title "Cornetto mappings to SKOS (inScheme, altLabel, definition)." ;
+        lib:source download21: ;
+	void:dataDump
+		<cornetto21-synset-skos-inscheme.ttl> ,
+		<cornetto21-synset-skos-labels.ttl> ,
+		<cornetto21-synset-skos-definitions.ttl> .
+
+<cornetto21edoal>
+	a void:Dataset ;
+	dc:title "EDOAL (reified) versions of the synset mappings"@en ;
+        lib:source download21: ;
+	void:dataDump
+		<cornetto21-edoal-synset-relations.ttl> ,
+		<cornetto21-edoal-wn20-mapping.ttl> ,
+		<cornetto21-edoal-wn30-mapping.ttl> .
+
+<cornetto21hub>
+	a void:Dataset ;
+	dc:title "Versionless URIS for the synset pointing to the last version, x-version links"@en ;
+        lib:source download21: ;
+	void:dataDump
+		<cornetto-hub-synsets.ttl> ,
+		<cornetto12-hub-mapping.ttl> ,
+		<cornetto21-cornetto12-mapping.ttl.gz>, 
+		<cornetto21-hub-mapping.ttl> .
+<lemonSchema>
+	a void:Dataset ;
+	lib:source lemon: ;
+	void:dataDump <lemon.ttl> .
+
+#
+#
+#
+#  Old, deprecated version with namespace:
+#
+#
+
+[ vann:preferredNamespacePrefix "cornetto" ;
+  vann:preferredNamespaceUri "http://purl.org/vocabularies/cornetto/"
+] .
+<cornetto12>
+        a void:Dataset ;
+        lib:source cornetto12: ;
+        dc:title "Cornetto v1.2 (deprecated, please use 2.1)" ;
+	dc:description "Dutch lexical resource, mapped to W3C WordNet" ;
+        owl:versionInfo "1.2" ;
+	void:dataDump
+                <cornetto12-wordnet-domainspec.ttl> ,
+                <cornetto12-schema.ttl> ,
+                <cornetto12-wn20.ttl.gz> ,
+                <cornetto12-wn30.ttl.gz> ,
+                <cornetto12-relations.ttl.gz> ,
+                <cornetto12-synsets.ttl.gz> .
+
