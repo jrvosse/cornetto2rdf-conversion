@@ -78,11 +78,13 @@ synset_uri(unknown_000, _URI):-
 	fail.
 
 synset_uri(Id, URI):-
-	% Strip of the nld-21- prefix
-	atomic_list_concat([_Lang, _Version|IdList], -, Id),
-	atomic_list_concat(IdList, -, Id2),
 	target_lexicon(Lexicon),
 	instance_namespace(Lexicon, Namespace),
+	(Lexicon = corn21
+	->      atomic_list_concat([_Lang, _Version|IdList], -, Id), % Strip of the nld-21- prefix
+		atomic_list_concat(IdList, -, Id2)
+	;	Id2 = Id
+	),
 	lmf_literal_to_id(['synset-', Id2], Namespace, URI).
 
 wn_uri(ID, Scheme, Target_URI) :-
