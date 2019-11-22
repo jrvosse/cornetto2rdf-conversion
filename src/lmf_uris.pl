@@ -40,7 +40,7 @@ wn_relations_edoal(Lex, URI) :-
 
 target_lexicon(odwn13).
 instance_namespace(odwn13, odwn13i).
-instance_namespace(corn21, corn21i).
+instance_namespace(cornetto21, corn21i).
 lexicon(cornetto21, 'http://purl.org/vocabularies/cornetto/21/').
 lexicon(cornetto12, 'http://purl.org/vocabularies/cornetto').
 lexicon(odwn13,     'http://purl.org/vocabularies/odwn13/').
@@ -80,7 +80,7 @@ synset_uri(unknown_000, _URI):-
 synset_uri(Id, URI):-
 	target_lexicon(Lexicon),
 	instance_namespace(Lexicon, Namespace),
-	(Lexicon = corn21
+	(Lexicon = cornetto21
 	->      atomic_list_concat([_Lang, _Version|IdList], -, Id), % Strip of the nld-21- prefix
 		atomic_list_concat(IdList, -, Id2)
 	;	Id2 = Id
