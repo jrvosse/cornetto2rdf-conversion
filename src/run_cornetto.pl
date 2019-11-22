@@ -15,7 +15,8 @@
 user:file_search_path(data, 'xml').
 lmf_input_file(cornetto21, 'cornetto-lmf.xml.gz').
 lmf_input_file(odwn13, 'odwn_orbn_gwg-LMF_1.3.xml.gz').
-% lmf_input_file(odwn13, 'odwn_test.xml.gz').
+% lmf_input_file(odwn13, 'odwn_5k.xml.gz').
+% lmf_input_file(odwn13, 'odwn_1.xml.gz').
 
 
 :- load_files(library(semweb/rdf_db), [silent(true)]).
