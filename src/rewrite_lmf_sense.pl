@@ -1,6 +1,6 @@
 senseId @@
  { LmfLE, lmf:sense, Sense } ,
-  { Sense, lmf:id, LUId },	 % e.g. r_v-184 (cornetto lex unit id)
+ { Sense, lmf:id, LUId },	 % e.g. r_v-184 (cornetto lex unit id)
  { Sense, lmf:sense_id, SenseId }	 % e.g. 1,2)
  ==>
  ls_uri(LmfLE, LS),
