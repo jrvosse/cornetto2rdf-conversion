@@ -7,6 +7,13 @@ senseId @@
  { LS, corn21s:id, LUId } >> sense,
  { LS, corn21s:senseId, SenseId } >> sense.
 
+sense_prov @@
+ { LmfLE, lmf:sense, Sense } ,
+ { Sense, lmf:provenance, Prov }
+ ==>
+ ls_uri(LmfLE, LS),
+ { LS, corn21s:provenance, Prov } >> sense.
+
 sense_synset @@
  { LmfLE, lmf:sense, Sense } ,
  { Sense, lmf:synset, literal(SynId) }   % e.g. d_v-145 (synset id)
