@@ -17,10 +17,18 @@
 
 
 post_process_lmf :-
+	target_lexicon(Lex),
+	post_process_lmf(Lex).
+
+post_process_lmf(cornetto21) :-
 	complete_edoal_graphs,
 	enrich_synsets,
 	replacedBy,
 	newhubs.
+
+post_process_lmf(odwn13) :-
+	complete_edoal_graphs,
+	enrich_synsets.
 
 complete_edoal_graphs :-
 	complete_wn_edoal_graphs(edoal_wn20, wn20),
