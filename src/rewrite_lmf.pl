@@ -109,6 +109,8 @@ save_rdf(cornetto21):-
 	save(inscheme,	   'cornetto21-synset-skos-inscheme.ttl').
 
 save_rdf(odwn13):-
+	save(edoal_internal, 'odwn13-edoal-synset-relations.ttl'),
+
 	save(domainspec, 'odwn13-wordnet-domainspec.ttl'),
 	save(domains,    'odwn13-wordnet-domains.ttl'),
 
